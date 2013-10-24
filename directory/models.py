@@ -13,6 +13,7 @@ class Organization(models.Model):
     address_2 = models.CharField(max_length=256, blank=True, null=True)
     city = models.CharField(max_length=256, blank=True, null=True)
     state = us.USStateField(blank=True, null=True)
+
     def __unicode__(self):
         return self.primary_name
 
@@ -47,8 +48,15 @@ class Group(models.Model):
     def __unicode__(self):
         return self.primary_name
 
-#class Directory(models.Model):
-#    """
-#
-#    """
-#    pass
+class Directory(models.Model):
+    """
+
+    """
+    organization = models.ForeignKey("Organization")
+    groups = models.ManyToManyField("Group")
+
+    class Meta:
+        verbose_name_plural = "Directories"
+ 
+    def __unicode__(self):
+        return unicode(self.organization)
